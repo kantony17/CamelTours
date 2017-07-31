@@ -15,5 +15,5 @@ Click on the newly created database, on the top menu, click Import. Click Choose
 In the browser, go to: localhost/[your_folder_address]/homedir/public_html/
 You should see the home page. CamelTours is now running locally on your computer!
 There are two user accounts:
-user - password: ChangeThis123
-admin - password: ChangeThis123
+'''user - password: ChangeThis123'''
+'''admin - password: ChangeThis123'''
