@@ -8,8 +8,8 @@ Open xampp, start Apache and MySQL
 ### 2. Load the database
 In the browser, go to: localhost/phpmyadmin (make sure that xampp is running the MySQL module) 
 On the left column, where all the databases are listed, click +New
-Create a new database named camel_igniter
-Click on the newly created database, on the top menu, click Import. Click Choose File, and select the file at /mysql/camel_igniter.sql from your downloaded folder.
+Create a new database named mock_camel_tours
+Click on the newly created database, on the top menu, click Import. Click Choose File, and select the file at /mysql/mock_camel_tours.sql from your downloaded folder.
 
 ### 3. Run CamelTours
 In the browser, go to: localhost/[your_folder_address]/homedir/public_html/
