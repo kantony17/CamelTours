@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
- 
+
   class Node extends CI_Controller
   {
     public function index($tour_id=-1, $node_id=-1, $form_data=array(), $error=null) {
@@ -115,7 +115,7 @@
         }
       }
       // Otherwise, echo what we do have.
-      else {                                                           
+      else {
         header('Content-type: text/json');
         header('Content-type: application/json');
         echo json_encode($result);
@@ -171,7 +171,7 @@
       $this->image_lib->resize();
       $this->image_lib->clear();
       unset($resize_config);
-    }   
+    }
     private function crop_image($source, $new, $width, $height) {
       // Get the width and height of the source image.
       list($w, $h) = getimagesize($source);
@@ -208,34 +208,22 @@
       // Determine the master axis.
       $master_dim = ($w > $h) ? 'height' : 'width';
       // Set our configuration array.
-        /*
-        max width = 1920
-        max height = 1080
-        if width>1920:
-            new width = 1920
-            new height = 1920/new width*height
-            width = new width
-            height = new height
-        if height>1080
-            new height = 1080
-            new width = 1080/new height*width
-            width = new width
-            height = new height
-        */
+      //define constants
       define ("max_w", 1920);
       define ("max_h", 1080);
+      //resize the image
       if ($w > max_w){
           $new_w = max_w;
           $new_h = max_w/$new_w*$h;
-          $w = $new_w; 
+          $w = $new_w;
           $h = $new_h;
       }
       if ($h > max_h){
           $new_h = max_h;
           $new_w = max_h/$new_h*$w;
-          $w = $new_w; 
+          $w = $new_w;
           $h = $new_h;
-      }     
+      }
       $resize_config = array(
         'image_library' => 'gd2',
         'source_image' => $source,
@@ -252,7 +240,7 @@
       $this->image_lib->resize();
       $this->image_lib->clear();
       unset($resize_config);
-    }  
+    }
     //insert function to compress images and audio files TO DO
     private function check_session() {
       if (!$this->session->userdata('validated'))

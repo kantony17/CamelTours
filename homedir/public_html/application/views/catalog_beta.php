@@ -6,11 +6,11 @@
         	<h3>Welcome to the CamelTours Catalog Beta!</h3>
         	<p>CamelTours is a digitally responsive, ethically responsible and culturally inclusive educational tool. As a fluid immersive technology, CamelTours can serve a diverse set of purposes. Below are example tours:</p>
         </div>
-          
+
         <div class="row" id="mapHolder"></div>
     <!--<div class="small-12 medium-5 large-4 columns">
-      
-    
+
+
 	<table style="width:325%">
 	  <tr>
 	    <th>Tour Name</th>
@@ -24,18 +24,19 @@
                 $tour_name= $tour[1];
                 $tour_location= $tour[2];
                 $tour_id= $tour[5];
+                $img_url= $tour[6];
                 $tour_item ='
                 <div class="container" id="'.$tour_id.'">
-                  <img src="'.base_url().'media/img/img_avatar.png" alt="Avatar" class="image">
+                  <img src="'.base_url().''.$img_url.'" alt="'.$tour_name.'" class="image">
                   <div class="overlay">
                     <div class="text">
                         <span class="tour">'.$tour_name.'</span><br>
                         <span class="creator">Creator</span><br>
                         <a class="discover" href="'.$tour_link.'"><span>Discover </span></a>
-                    </div> 
+                    </div>
                   </div>
                 </div>';
-                
+
                 echo $tour_item;
             }
         ?>
@@ -46,7 +47,7 @@
             function myMap() {
                 var mapHolder = document.getElementById("mapHolder");
                 mapHolder.style.height ="310px"
-                
+
                 var mapDiv = document.createElement("div");
                 mapDiv.setAttribute("id","map");
                 mapDiv.style.height ="300px"
@@ -83,7 +84,7 @@
                                 clearTimeout(time'.$tour_id.');
                                 marker'.$tour_id.'.info.close(map, marker'.$tour_id.')
                             }, 3000);
-                        });    
+                        });
                         marker'.$tour_id.'.addListener("click", function() {
                             this.info.open(map, this);
                         });

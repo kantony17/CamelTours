@@ -11,15 +11,22 @@
         show_404();
 
         $data['tours']=[];
-        
+
         $this->db->where('tour_public', 1);
         $query = $this->db->get('tours');
-        
+
+
         foreach ($query->result() as $row){
-            $link = 'ct/u'.$row->user_id.'/t'.$row->tour_id.'/'; 
-            $data['tours'][] = array($link, $row->tour_name, $row->tour_location, $row->tour_lat, $row->tour_long, $row->tour_id);
+            $link = 'ct/u'.$row->user_id.'/t'.$row->tour_id.'/';
+            $this->db->where('tour_id', $row->tour_id);
+            $query1 = $this->db->get('nodes');
+            $node_id = $query1->first_row()->node_id;
+            $this->db->where('node_id', $node_id);
+            $query2 = $this->db->order_by('seq_num','desc')->get('slides');
+            $img_url = $query2->first_row()->media_uri;
+            $data['tours'][] = array($link, $row->tour_name, $row->tour_location, $row->tour_lat, $row->tour_long, $row->tour_id, $img_url);
         }
-      
+
       //<!--Load our templates and the view for this page.-->
       $this->load->view('templates/header_beta', $data);
       $this->load->view('templates/navigation', $data);

@@ -20,7 +20,7 @@
     );
     public function manifesto($user_id, $tour_id) {
       // Define our paths and files.
-      $tour_uri = 'ct/u'.$user_id.'/t'.$tour_id.'/'; 
+      $tour_uri = 'ct/u'.$user_id.'/t'.$tour_id.'/';
       $manifest_file = getcwd().'/'.$tour_uri.'dl/cache.manifest';
       // Get the node files that belong to this tour.
       $nodes = array();
@@ -45,7 +45,7 @@
       $footer = array("\nNETWORK:\n", "*\n");
       // Define the array of other tour files to add.
       $misc = array(
-        $tour_uri.'dl/',	
+        $tour_uri.'dl/',
         $tour_uri	//putting the web page to the manifesto for caching, e.g http://cameltours.org/ct/u16/t10
       );
       // Merge our arrays together.
@@ -93,6 +93,17 @@
       foreach ($this->css as $css) {
         $h[] = '    <link rel="stylesheet" href="'.base_url().$css.'">';
       }
+      $h[] = "<script>
+      	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      	  ga('create', 'UA-101867950-1', 'auto');
+      	  ga('send', 'pageview');
+          </script>";
+
+
       $h[] = '  </head>';
       $h[] = '  <body>';
       $h[] = '    <div class="outer-centerer">';
@@ -121,7 +132,7 @@
       $h[] = '    </script>';
       $h[] = '    <script> var totalFiles = '.$total_files.'; </script>';
       $h[] = '    <script src="'.base_url().'media/js/cacher.js"></script>';
-        
+
       $h[] = '  </body>';
       $h[] = '</html>';
       // Create the HTML string to write to file.
@@ -129,7 +140,7 @@
       // Write the string!
       file_put_contents($download_file, $html);
     }
-    
+
     public function build_tour($user_id, $tour_id) {
       // Define our tour paths and files.
       $tour_uri = 'ct/u'.$user_id.'/t'.$tour_id.'/';
@@ -139,7 +150,7 @@
       //declare variables
       //$t_lat = array();
       //$t_long = array();
-      
+
       $this->db->where('tour_id', $tour_id); //go to the location of the database with the tour id matching our tour id
       $query = $this->db->get('tours'); //get the tour infor
       if ($query->num_rows() == 1) {
@@ -159,7 +170,7 @@
           $nodes[$row->node_name] = $row->node_id;
           }
         ksort($nodes);
-        
+
         //NEW CODES
         foreach ($query->result() as $row){
          $nodes_data_all[$row->node_name] = array($row->node_name, $row->node_lat, $row->node_long, $row->node_id, $row->tour_id, $row->node_location);
@@ -185,16 +196,16 @@
       $h[] = '          <h2>Welcome to '.$title.'!</h2>';
     //conditionals here to handle lat long == null
 	if ($t_lat != null and $t_long != null) {
-            
-      //if the tour is Virginia's mural walk, include a static map		
+
+      //if the tour is Virginia's mural walk, include a static map
       		if($tour_id == 10 && $user_id == 16){
       			$h[] = '<div id="mapHolder"><img src="http://cameltours.org/ct/u16/t10/map/map.PNG" alt="Static Map"></div>';
-      			}		
+      			}
       		else {
                 $h[] = '<div id="mapHolder"></div>';
             }
     }
-   
+
     //places stops on the tour
       if (count($nodes) > 0) {
         $h[] = '          <div class="node-list">';
@@ -207,7 +218,7 @@
         $h[] = '          </div>';
       }
       else {
-        $h[] = '          <br><p>No nodes found for this tour.</p>';        
+        $h[] = '          <br><p>No nodes found for this tour.</p>';
       }
       $h[] = '          <br><br><h2><a href="http://cameltours.org/catalog">Click for Catalog</a></h2>';
       $h[] = '          <br><br><h2><a href="'.base_url().$tour_uri.'dl/">Download Tour for Offline Use</a></h2>';
@@ -226,19 +237,19 @@
       $html = implode("\n", $h);
       // Write the string!
       file_put_contents($tour_file, $html);
-        
-        
-      $h   = array();    
+
+
+      $h   = array();
       $h[] = '		    function myMap() {';
       $h[] = '		    		var i = 1';
       $h[] = '				var mapHolder = document.getElementById("mapHolder");';
-      
+
       //if this is Virginia's walking tour, remove the static map
       if($tour_id == 10 && $user_id == 16){
       $h[] = '				mapHolder.removeChild(mapHolder.childNodes[0]);';
       }
-      
-      
+
+
       $h[] = '				mapHolder.style.width ="100%"';
       $h[] = '				mapHolder.style.height ="400px"';
       $h[] = '				var mapDiv = document.createElement("div");';
@@ -246,10 +257,10 @@
       $h[] = '				mapDiv.style.width ="100%"';
       $h[] = '				mapDiv.style.height ="400px"';
       $h[] = '				mapHolder.appendChild(mapDiv);';
-      
-      
+
+
       $h[] = '				var mapOptions = {';
-      $h[] = '		                	center: new google.maps.LatLng('.$t_lat.','.$t_long.'),'; 
+      $h[] = '		                	center: new google.maps.LatLng('.$t_lat.','.$t_long.'),';
       $h[] = '			        	zoom: 17';
       $h[] = '	             		};';
       $h[] = '				var map = new google.maps.Map(document.getElementById("map"), mapOptions);';
@@ -262,7 +273,7 @@
       $h[] = '          			position: new google.maps.LatLng('.$node_data[1].','.$node_data[2].'),label:label2,';
       $h[] = '					title:"'.$node_data[0].'"';
       $h[] = '				});';
-      
+
       $h[] = '				marker.info = new google.maps.InfoWindow({';
       $h[] = ' 				content: "<a href=\"'.base_url().$tour_uri.'n'.$node_data[3].'\">'.$node_data[0].'</a>"';
       $h[] = '  			});';
@@ -271,20 +282,20 @@
       $h[] = '    			this.info.open(map, this);';
       $h[] = '  			});';
       //send info to map
-      $h[] = '          		marker.setMap(map);'; 
-      $h[] = '          		i++'; 
-      
+      $h[] = '          		marker.setMap(map);';
+      $h[] = '          		i++';
+
       //put each node's lat and long in a marker and place on the map
       				}
 	   $h[] = '			}';
-        
+
         $tour_file_js = getcwd().'/'.$tour_uri.'index.js';
         $js = implode("\n", $h);
       // Write the string!
       file_put_contents($tour_file_js, $js);
 	}
     /*
-    get_map_contents($tour_id, 
+    get_map_contents($tour_id,
     //<!--load libraries for google maps api-->
       $this->load->library('googlemaps');
       $h[] = '$config['center'] = '.$tour_lat.', '.$tour_long.'; //these need to be entered as a string
@@ -339,8 +350,8 @@
       $h[] = '        </div>';
       $h[] = '      </div>';
       $h[] = '    </div>';
-        
-            
+
+
       $h[] = '    <div class="swiper-container" style="visibility: hidden;">';
         $h[] = '<div class="swiper-button-next swiper-button-white"></div>';
         $h[] = '<div class="swiper-button-prev swiper-button-white"></div>';
@@ -390,7 +401,7 @@
       $h[] = '      </div>';
         $h[] = '      </div>';
       $h[] = '    </div>';
-        
+
       foreach ($this->js as $js) {
         $h[] = '    <script src="'.base_url().$js.'"></script>';
       }
